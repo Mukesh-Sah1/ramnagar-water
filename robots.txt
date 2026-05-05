@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /functions/
-
-Sitemap: https://YOUR-PROJECT-ID.web.app/sitemap.xml
