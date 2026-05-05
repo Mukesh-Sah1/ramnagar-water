@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>रामनगर खानेपानी उपभोक्ता तथा सरसफाई समिति</title>
+  <meta name="description" content="रामनगर खानेपानी उपभोक्ता तथा सरसफाई समिति — ईश्वरपुर नगरपालिका-९, रामनगर, सर्लाही, नेपाल">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
+  <link rel="stylesheet" href="css/main.css">
+  <!-- Google Fonts loaded in CSS -->
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     LOADING SCREEN
+════════════════════════════════════════════════════════════ -->
+<div id="loading-screen">
+  <div class="loading-logo">💧</div>
+  <div class="loading-text">
+    रामनगर खानेपानी उपभोक्ता तथा सरसफाई समिति<br>
+    <small style="opacity:0.7">लोड हुँदैछ...</small>
+  </div>
+  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-logo" style="cursor:pointer" onclick="showPage('home')">
+      <div class="header-logo-icon">💧</div>
+      <div class="header-logo-text">
+        <span class="main-name">रामनगर खानेपानी समिति</span>
+        <span class="sub-name">ईश्वरपुर नगरपालिका-९, सर्लाही, नेपाल</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a class="nav-link active" data-page="home">🏠 गृहपृष्ठ</a>
+      <a class="nav-link" data-page="home" onclick="setTimeout(()=>document.getElementById('bill-search-section').scrollIntoView({behavior:'smooth'}),100)">📄 बिल जाँच्नुस्</a>
+      <a class="nav-link" data-page="members">👥 सदस्यहरू</a>
+      <a class="nav-link" data-page="contact">📞 सम्पर्क</a>
+      <a class="nav-link nav-btn" id="header-login" data-page="auth">🔐 लगइन</a>
+      <a class="nav-link" id="header-dashboard" style="display:none;background:rgba(255,255,255,0.15);color:white">📊 Dashboard</a>
+      <a class="nav-link" id="header-logout" style="display:none;cursor:pointer;color:rgba(255,255,255,0.7)" onclick="logout()">↩ लगआउट</a>
+    </nav>
+    <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+  <a class="nav-link" data-page="home" onclick="closeMobileNav()">🏠 गृहपृष्ठ</a>
+  <a class="nav-link" data-page="members" onclick="closeMobileNav();loadMembers()">👥 सदस्यहरू</a>
+  <a class="nav-link" data-page="contact" onclick="closeMobileNav()">📞 सम्पर्क</a>
+  <a class="nav-link nav-btn" id="mob-login" data-page="auth" onclick="closeMobileNav()">🔐 लगइन</a>
+  <a class="nav-link" id="mob-logout" style="display:none" onclick="logout();closeMobileNav()">↩ लगआउट</a>
+</nav>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: HOME
+════════════════════════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">🇳🇵 ईश्वरपुर नगरपालिका-९, सर्लाही</div>
+      <h1>रामनगर खानेपानी उपभोक्ता<br>तथा सरसफाई समिति</h1>
+      <h2>Ramnagar Water Consumer & Sanitation Committee<br>स्वच्छ पानी, स्वस्थ जीवन — Clean Water, Healthy Life</h2>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" onclick="document.getElementById('bill-search-section').scrollIntoView({behavior:'smooth'})">
+          📄 बिल जाँच्नुस्
+        </button>
+        <button class="btn btn-outline btn-lg" data-page="auth">
+          🔐 लगइन / दर्ता
+        </button>
+      </div>
+    </div>
+    <svg class="hero-waves" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,20 1440,40 L1440,80 L0,80 Z" fill="#f8fafc"/>
+    </svg>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-icon">👨‍👩‍👧‍👦</div>
+        <div class="stat-value" id="stat-users">—</div>
+        <div class="stat-label">दर्ता ग्राहक</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value" id="stat-payments" style="font-size:1.3rem">—</div>
+        <div class="stat-label">कुल संकलन</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">💧</div>
+        <div class="stat-value">२४/७</div>
+        <div class="stat-label">सेवा उपलब्ध</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">🏘️</div>
+        <div class="stat-value">वडा ९</div>
+        <div class="stat-label">ईश्वरपुर नगरपालिका</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bill Search Section -->
+  <section class="section" id="bill-search-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">बिल सेवा</span>
+        <h2>आफ्नो बिल जाँच्नुस्</h2>
+        <p>धारा नं वा नामद्वारा खोज्नुस् — Check your water bill instantly</p>
+      </div>
+      <div class="search-card">
+        <div class="search-tabs">
+          <button class="search-tab active" data-search="id" onclick="setSearchType('id')">
+            🔢 धारा नं (Customer ID)
+          </button>
+          <button class="search-tab" data-search="name" onclick="setSearchType('name')">
+            👤 नामद्वारा खोज्नुस्
+          </button>
+        </div>
+        <div id="search-field-id">
+          <div class="input-group has-icon">
+            <label>धारा नं (Customer ID) प्रविष्ट गर्नुस्</label>
+            <input type="text" id="search-by-id" placeholder="जस्तै: 001, 2024-001..." autocomplete="off">
+            <span class="input-icon">🔢</span>
+          </div>
+        </div>
+        <div id="search-field-name" class="hidden">
+          <div class="input-group has-icon">
+            <label>ग्राहकको नाम प्रविष्ट गर्नुस्</label>
+            <input type="text" id="search-by-name" placeholder="नाम लेख्नुस्..." autocomplete="off">
+            <span class="input-icon">👤</span>
+          </div>
+        </div>
+        <button class="btn btn-primary w-full" id="search-bill-btn" onclick="searchBill()">
+          🔍 बिल खोज्नुस्
+        </button>
+        <div id="bill-search-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section section-alt">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">प्रक्रिया</span>
+        <h2>कसरी काम गर्छ?</h2>
+        <p>सजिलो ३ चरणमा बिल भुक्तानी गर्नुस्</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">१</div>
+          <h3>दर्ता गर्नुस्</h3>
+          <p>आफ्नो धारा नं र जानकारी राखेर खाता खोल्नुस्</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">२</div>
+          <h3>बिल जाँच्नुस्</h3>
+          <p>हालको बिल र भुक्तानी इतिहास हेर्नुस्</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">३</div>
+          <h3>भुक्तानी गर्नुस्</h3>
+          <p>eSewa, Fonepay वा Connect IPS मार्फत भुक्तानी गर्नुस्</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">४</div>
+          <h3>रसिद लिनुस्</h3>
+          <p>डिजिटल रसिद डाउनलोड वा प्रिन्ट गर्नुस्</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment Methods -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">डिजिटल भुक्तानी</span>
+        <h2>भुक्तानी विधिहरू</h2>
+        <p>नेपालका प्रमुख डिजिटल भुक्तानी प्रणाली समर्थित</p>
+      </div>
+      <div class="payment-methods-grid">
+        <div class="payment-method-card">
+          <div class="method-logo">🟢</div>
+          <div class="method-name">eSewa</div>
+          <div class="method-desc">नेपालको नं.१ डिजिटल वालेट</div>
+        </div>
+        <div class="payment-method-card">
+          <div class="method-logo">🔵</div>
+          <div class="method-name">Fonepay</div>
+          <div class="method-desc">QR र मोबाइल बैंकिङ</div>
+        </div>
+        <div class="payment-method-card">
+          <div class="method-logo">🟡</div>
+          <div class="method-name">Connect IPS</div>
+          <div class="method-desc">अन्तर्बैंक भुक्तानी प्रणाली</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notice Board -->
+  <section class="section section-alt">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">सूचना</span>
+        <h2>सूचनापाटी</h2>
+      </div>
+      <div style="max-width:700px;margin:0 auto">
+        <div class="info-card" style="margin-bottom:12px;border-left:4px solid var(--warning)">
+          <div style="font-weight:700;color:var(--blue-deep);margin-bottom:4px;font-family:var(--font-nepali)">⚠️ बिल भुक्तानीको म्याद</div>
+          <div style="font-size:0.85rem;color:var(--gray-600)">प्रत्येक महिनाको अन्तिम दिनसम्म बिल भुक्तानी गर्नुहोस्। विलम्ब शुल्क लाग्न सक्छ।</div>
+        </div>
+        <div class="info-card" style="margin-bottom:12px;border-left:4px solid var(--success)">
+          <div style="font-weight:700;color:var(--blue-deep);margin-bottom:4px;font-family:var(--font-nepali)">✅ अनलाइन भुक्तानी सुरु</div>
+          <div style="font-size:0.85rem;color:var(--gray-600)">अब घरबाटै खानेपानीको बिल अनलाइन तिर्न सकिन्छ।</div>
+        </div>
+        <div class="info-card" style="border-left:4px solid var(--blue-light)">
+          <div style="font-weight:700;color:var(--blue-deep);margin-bottom:4px;font-family:var(--font-nepali)">ℹ️ कार्यालय समय</div>
+          <div style="font-size:0.85rem;color:var(--gray-600)">आइतबार — शुक्रबार: बिहान ९:०० — साँझ ५:०० बजे</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: AUTH (Login / Register)
+════════════════════════════════════════════════════════════ -->
+<div id="page-auth" class="page">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">💧</div>
+        <h2>रामनगर खानेपानी समिति</h2>
+        <p>ग्राहक पोर्टल — Customer Portal</p>
+      </div>
+
+      <!-- Auth Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="auth-tab-login">🔐 लगइन</button>
+        <button class="auth-tab" id="auth-tab-register">📝 नयाँ दर्ता</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="auth-login-form">
+        <div class="alert alert-error hidden" id="login-error"></div>
+        <form id="login-form">
+          <div class="input-group">
+            <label>इमेल ठेगाना</label>
+            <input type="email" id="login-email" placeholder="your@email.com" required autocomplete="email">
+          </div>
+          <div class="input-group">
+            <label>पासवर्ड</label>
+            <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary w-full btn-lg mt-8" id="login-btn">
+            🔐 लगइन गर्नुस्
+          </button>
+        </form>
+        <div class="auth-footer">
+          खाता छैन? <a onclick="document.getElementById('auth-tab-register').click()">नयाँ दर्ता गर्नुस्</a>
+        </div>
+      </div>
+
+      <!-- Register Form -->
+      <div id="auth-register-form" style="display:none">
+        <div class="alert alert-error hidden" id="register-error"></div>
+        <form id="register-form">
+          <div class="form-row">
+            <div class="input-group">
+              <label>पूरा नाम *</label>
+              <input type="text" id="reg-name" placeholder="राम बहादुर..." required>
+            </div>
+            <div class="input-group">
+              <label>धारा नं (Customer ID) *</label>
+              <input type="text" id="reg-customer-id" placeholder="001" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>ठेगाना *</label>
+            <input type="text" id="reg-address" placeholder="रामनगर-९, सर्लाही" required>
+          </div>
+          <div class="input-group">
+            <label>फोन नम्बर *</label>
+            <input type="tel" id="reg-phone" placeholder="98XXXXXXXX" required>
+          </div>
+          <div class="input-group">
+            <label>इमेल ठेगाना *</label>
+            <input type="email" id="reg-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-row">
+            <div class="input-group">
+              <label>पासवर्ड *</label>
+              <input type="password" id="reg-password" placeholder="कम्तिमा ६ अक्षर" required>
+            </div>
+            <div class="input-group">
+              <label>पासवर्ड पुष्टि *</label>
+              <input type="password" id="reg-confirm" placeholder="पुनः लेख्नुस्" required>
+            </div>
+          </div>
+          <div class="alert alert-info" style="font-size:0.8rem">
+            💡 धारा नं (Customer ID) तपाईंको खानेपानी समितिले दिएको नम्बर हो।
+          </div>
+          <button type="submit" class="btn btn-primary w-full btn-lg mt-8" id="register-btn">
+            📝 दर्ता गर्नुस्
+          </button>
+        </form>
+        <div class="auth-footer">
+          पहिले नै खाता छ? <a onclick="document.getElementById('auth-tab-login').click()">लगइन गर्नुस्</a>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div style="text-align:center">
+        <button class="btn btn-blue btn-sm" onclick="showPage('home')">← गृहपृष्ठमा फर्कनुस्</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-auth -->
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: USER DASHBOARD
+════════════════════════════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="user-sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="dash-avatar">?</div>
+        <div class="sidebar-user-name" id="dash-name">—</div>
+        <div class="sidebar-user-id" id="dash-cid">धारा नं: —</div>
+      </div>
+      <div class="sidebar-menu">
+        <div class="sidebar-section-label">मेनु</div>
+        <div class="sidebar-item active" data-tab="overview">
+          <span class="item-icon">📊</span> Overview
+        </div>
+        <div class="sidebar-item" data-tab="bill">
+          <span class="item-icon">📄</span> हालको बिल
+        </div>
+        <div class="sidebar-item" data-tab="history">
+          <span class="item-icon">🕐</span> भुक्तानी इतिहास
+        </div>
+        <div class="sidebar-item" data-tab="profile">
+          <span class="item-icon">👤</span> प्रोफाइल
+        </div>
+        <div class="sidebar-section-label" style="margin-top:16px">खाता</div>
+        <div class="sidebar-item" onclick="logout()">
+          <span class="item-icon">↩</span> लगआउट
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="dashboard-main">
+      <!-- Mobile sidebar toggle -->
+      <button style="display:none" id="mob-sidebar-toggle" onclick="toggleSidebar()" class="btn btn-blue btn-sm mb-16">☰ Menu</button>
+
+      <!-- Tab: Overview -->
+      <div class="dashboard-tab active" id="dash-overview">
+        <div class="page-title">नमस्कार! 🙏</div>
+        <div class="page-subtitle">तपाईंको खाते पानी डास्बोर्डमा स्वागत छ</div>
+        <div class="cards-grid">
+          <div class="info-card">
+            <div class="info-card-icon">📄</div>
+            <div class="info-card-value" id="overview-bill-status" style="font-size:1.1rem;font-family:var(--font-nepali)">—</div>
+            <div class="info-card-label">बिल स्थिति</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">💰</div>
+            <div class="info-card-value" id="overview-bill-amount" style="font-size:1.1rem">—</div>
+            <div class="info-card-label">हालको बिल</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">📅</div>
+            <div class="info-card-value" id="overview-due-date" style="font-size:0.9rem;font-family:var(--font-nepali)">—</div>
+            <div class="info-card-label">म्याद</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">✅</div>
+            <div class="info-card-value" id="overview-total-paid" style="font-size:1rem">रु. ०</div>
+            <div class="info-card-label">कुल भुक्तानी</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-icon">🔢</div>
+            <div class="info-card-value" id="overview-payment-count">०</div>
+            <div class="info-card-label">भुक्तानी पटक</div>
+          </div>
+        </div>
+        <div class="mt-16" id="dash-bill-card">
+          <div class="table-empty" style="background:white;border-radius:var(--radius);padding:40px;font-family:var(--font-nepali)">
+            लोड हुँदैछ...
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Bill -->
+      <div class="dashboard-tab" id="dash-bill">
+        <div class="page-title">हालको बिल</div>
+        <div class="page-subtitle">तपाईंको सबैभन्दा पछिल्लो खानेपानी बिल</div>
+        <div id="dash-bill-detail">
+          <div class="table-empty" style="background:white;border-radius:var(--radius);padding:40px">
+            लोड हुँदैछ...
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Payment History -->
+      <div class="dashboard-tab" id="dash-history">
+        <div class="page-title">भुक्तानी इतिहास</div>
+        <div class="page-subtitle">तपाईंका सबै भुक्तानी रेकर्डहरू</div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">भुक्तानी सूची</span>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>रकम</th>
+                  <th>विधि</th>
+                  <th>मिति</th>
+                  <th>रसिद</th>
+                </tr>
+              </thead>
+              <tbody id="payment-history-body">
+                <tr><td colspan="5" class="table-empty">लोड हुँदैछ...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Profile -->
+      <div class="dashboard-tab" id="dash-profile">
+        <div class="page-title">मेरो प्रोफाइल</div>
+        <div class="page-subtitle">आफ्नो जानकारी अपडेट गर्नुस्</div>
+        <div style="max-width:560px">
+          <div class="search-card">
+            <form id="profile-update-form">
+              <div class="input-group">
+                <label>पूरा नाम</label>
+                <input type="text" id="profile-name" placeholder="नाम">
+              </div>
+              <div class="input-group">
+                <label>धारा नं (Customer ID)</label>
+                <input type="text" id="profile-cid" disabled style="opacity:0.6;cursor:not-allowed">
+              </div>
+              <div class="input-group">
+                <label>ठेगाना</label>
+                <input type="text" id="profile-address" placeholder="ठेगाना">
+              </div>
+              <div class="input-group">
+                <label>फोन नम्बर</label>
+                <input type="tel" id="profile-phone" placeholder="98XXXXXXXX">
+              </div>
+              <div class="input-group">
+                <label>इमेल</label>
+                <input type="email" id="profile-email" disabled style="opacity:0.6;cursor:not-allowed">
+              </div>
+              <div class="info-card mt-12" style="font-size:0.8rem;color:var(--gray-500)">
+                📅 दर्ता मिति: <span id="profile-since">—</span>
+              </div>
+              <button type="submit" class="btn btn-primary mt-16" id="profile-update-btn">
+                💾 अपडेट गर्नुस्
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div><!-- /page-dashboard -->
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: ADMIN PANEL
+════════════════════════════════════════════════════════════ -->
+<div id="page-admin" class="page">
+  <div class="admin-layout">
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">⚙️</div>
+        <div class="admin-logo-text">Admin Panel</div>
+      </div>
+      <div class="admin-menu">
+        <div class="admin-section-label">मुख्य</div>
+        <div class="admin-item active" data-tab="dashboard">📊 Dashboard</div>
+        <div class="admin-section-label">व्यवस्थापन</div>
+        <div class="admin-item" data-tab="customers">👥 ग्राहकहरू</div>
+        <div class="admin-item" data-tab="bills">📄 बिलहरू</div>
+        <div class="admin-item" data-tab="payments">💳 भुक्तानी</div>
+        <div class="admin-item" data-tab="members">🧑‍🤝‍🧑 सदस्यहरू</div>
+        <div class="admin-section-label">रिपोर्ट</div>
+        <div class="admin-item" data-tab="reports">📈 रिपोर्ट</div>
+        <div class="admin-section-label">खाता</div>
+        <div class="admin-item" onclick="logout()">↩ लगआउट</div>
+      </div>
+    </aside>
+
+    <!-- Admin Main -->
+    <main class="admin-main">
+      <button style="display:none" id="mob-admin-toggle" onclick="toggleAdminSidebar()" class="btn btn-blue btn-sm mb-16">☰ Menu</button>
+
+      <!-- Tab: Dashboard -->
+      <div class="admin-tab active" id="admin-dashboard">
+        <div class="page-title">एडमिन डास्बोर्ड</div>
+        <div class="page-subtitle">समग्र जानकारी एकैठाउँमा</div>
+        <div class="admin-stats">
+          <div class="admin-stat">
+            <div class="admin-stat-icon astat-blue">👥</div>
+            <div>
+              <div class="admin-stat-val" id="astat-users">—</div>
+              <div class="admin-stat-label">कुल ग्राहक</div>
+            </div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-icon astat-gold">💰</div>
+            <div>
+              <div class="admin-stat-val" id="astat-payments" style="font-size:1.2rem">—</div>
+              <div class="admin-stat-label">कुल संकलन</div>
+            </div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-icon astat-red">⚠️</div>
+            <div>
+              <div class="admin-stat-val" id="astat-pending">—</div>
+              <div class="admin-stat-label">बाँकी बिल</div>
+            </div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-icon astat-green">✅</div>
+            <div>
+              <div class="admin-stat-val" id="astat-transactions">—</div>
+              <div class="admin-stat-label">कुल लेनदेन</div>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">⚡ छिटो कार्यहरू</span>
+          </div>
+          <div style="padding:20px;display:flex;flex-wrap:wrap;gap:10px">
+            <button class="btn btn-primary" onclick="showAdminTab('customers');openModal('add-customer-modal')">➕ नयाँ ग्राहक</button>
+            <button class="btn btn-teal" onclick="showAdminTab('bills');openModal('create-bill-modal')">📄 नयाँ बिल</button>
+            <button class="btn btn-blue" onclick="showAdminTab('reports')">📈 रिपोर्ट हेर्नुस्</button>
+            <button class="btn btn-blue" onclick="loadAdminStats()">🔄 रिफ्रेस</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Customers -->
+      <div class="admin-tab" id="admin-customers">
+        <div class="page-title">ग्राहक व्यवस्थापन</div>
+        <div class="page-subtitle">ग्राहकहरू थप्नुस्, सम्पादन र मेटाउनुस्</div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">ग्राहक सूची</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="text" id="customer-search" class="table-search" placeholder="🔍 खोज्नुस्...">
+              <button class="btn btn-primary btn-sm" data-modal-open="add-customer-modal">➕ नयाँ ग्राहक</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>धारा नं</th>
+                  <th>नाम</th>
+                  <th>ठेगाना</th>
+                  <th>फोन</th>
+                  <th>इमेल</th>
+                  <th>कार्य</th>
+                </tr>
+              </thead>
+              <tbody id="admin-customers-body">
+                <tr><td colspan="6" class="table-empty">लोड हुँदैछ...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Bills -->
+      <div class="admin-tab" id="admin-bills">
+        <div class="page-title">बिल व्यवस्थापन</div>
+        <div class="page-subtitle">बिल सिर्जना, अपडेट र व्यवस्थापन</div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">बिल सूची</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="text" id="bill-search" class="table-search" placeholder="🔍 खोज्नुस्...">
+              <button class="btn btn-primary btn-sm" data-modal-open="create-bill-modal">➕ नयाँ बिल</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>धारा नं</th>
+                  <th>ग्राहकको नाम</th>
+                  <th>महिना</th>
+                  <th>रकम</th>
+                  <th>स्थिति</th>
+                  <th>कार्य</th>
+                </tr>
+              </thead>
+              <tbody id="admin-bills-body">
+                <tr><td colspan="6" class="table-empty">लोड हुँदैछ...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Payments -->
+      <div class="admin-tab" id="admin-payments">
+        <div class="page-title">भुक्तानी अनुगमन</div>
+        <div class="page-subtitle">सबै भुक्तानी रेकर्डहरू</div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">भुक्तानी सूची</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="text" id="payment-filter-search" class="table-search" placeholder="🔍 नाम / ID...">
+              <input type="date" id="payment-filter-date" class="table-search" style="min-width:140px">
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>ग्राहकको नाम</th>
+                  <th>धारा नं</th>
+                  <th>रकम</th>
+                  <th>विधि</th>
+                  <th>मिति</th>
+                </tr>
+              </thead>
+              <tbody id="admin-payments-body">
+                <tr><td colspan="6" class="table-empty">लोड हुँदैछ...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Members -->
+      <div class="admin-tab" id="admin-members">
+        <div class="page-title">सदस्य व्यवस्थापन</div>
+        <div class="page-subtitle">समितिका सदस्यहरू व्यवस्थापन</div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">सदस्य सूची</span>
+            <button class="btn btn-primary btn-sm" data-modal-open="add-member-modal">➕ नयाँ सदस्य</button>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>नाम</th>
+                  <th>पद</th>
+                  <th>ठेगाना</th>
+                  <th>फोन</th>
+                  <th>कार्य</th>
+                </tr>
+              </thead>
+              <tbody id="admin-members-body">
+                <tr><td colspan="5" class="table-empty">लोड हुँदैछ...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Reports -->
+      <div class="admin-tab" id="admin-reports">
+        <div class="page-title">रिपोर्ट</div>
+        <div class="page-subtitle">मासिक संकलन रिपोर्ट र CSV निर्यात</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px" class="contact-grid">
+          <div class="search-card">
+            <h3 style="font-family:var(--font-nepali);color:var(--blue-deep);margin-bottom:16px">📈 मासिक रिपोर्ट</h3>
+            <div class="input-group">
+              <label>महिना चयन गर्नुस् (बिल महिना)</label>
+              <input type="text" id="report-month" placeholder="जस्तै: 2081-Baisakh">
+            </div>
+            <button class="btn btn-blue w-full" onclick="loadMonthlyReport()">📊 रिपोर्ट हेर्नुस्</button>
+            <div id="monthly-report-content" class="mt-16"></div>
+          </div>
+          <div class="search-card">
+            <h3 style="font-family:var(--font-nepali);color:var(--blue-deep);margin-bottom:16px">📥 CSV निर्यात</h3>
+            <p style="font-size:0.85rem;color:var(--gray-500);margin-bottom:16px">
+              सबै भुक्तानी डाटा Excel/Spreadsheet मा निर्यात गर्नुस्
+            </p>
+            <div class="input-group">
+              <label>महिना (वैकल्पिक — खाली राखे सबै)</label>
+              <input type="text" id="export-month" placeholder="जस्तै: 2081-Baisakh">
+            </div>
+            <button class="btn btn-success w-full" id="export-csv-btn" onclick="exportPaymentsCSV()">
+              ⬇️ CSV डाउनलोड गर्नुस्
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div><!-- /page-admin -->
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: MEMBERS
+════════════════════════════════════════════════════════════ -->
+<div id="page-members" class="page">
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">समिति</span>
+        <h2>समितिका सदस्यहरू</h2>
+        <p>रामनगर खानेपानी उपभोक्ता तथा सरसफाई समितिका सदस्यहरू</p>
+      </div>
+      <div class="members-grid" id="members-grid">
+        <p style="color:var(--gray-400);font-family:var(--font-nepali)">लोड हुँदैछ...</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: CONTACT
+════════════════════════════════════════════════════════════ -->
+<div id="page-contact" class="page">
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">सम्पर्क</span>
+        <h2>सम्पर्क जानकारी</h2>
+        <p>हामीलाई सम्पर्क गर्नुस् — Get in Touch</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>📞 कार्यालय जानकारी</h3>
+          <div class="contact-item">
+            <div class="contact-icon">🏢</div>
+            <div>
+              <div class="contact-item-label">कार्यालयको नाम</div>
+              <div class="contact-item-value" style="font-family:var(--font-nepali)">रामनगर खानेपानी उपभोक्ता तथा सरसफाई समिति</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-item-label">ठेगाना</div>
+              <div class="contact-item-value" style="font-family:var(--font-nepali)">ईश्वरपुर नगरपालिका-९, रामनगर, सर्लाही, नेपाल</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-item-label">फोन</div>
+              <div class="contact-item-value">+977-XXXXXXXXXX</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-item-label">इमेल</div>
+              <div class="contact-item-value">info@ramnagar-water.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <div class="contact-item-label">कार्यालय समय</div>
+              <div class="contact-item-value">
+                <div style="font-family:var(--font-nepali)">आइतबार — शुक्रबार</div>
+                <div style="color:var(--gray-500);font-size:0.85rem">बिहान ९:०० — साँझ ५:००</div>
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">💬</div>
+            <div>
+              <div class="contact-item-label">WhatsApp</div>
+              <div class="contact-item-value">
+                <a href="https://wa.me/9779762579706" target="_blank" style="color:var(--teal)">+977 9762579706</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.8867406393097!2d85.57213!3d26.9789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ec5a45b16a84c5%3A0x0!2sRamnagar%2C%20Sarlahi%2C%20Nepal!5e0!3m2!1sen!2snp!4v1700000000000!5m2!1sen!2snp"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Ramnagar Location">
+            </iframe>
+          </div>
+          <div class="contact-card" style="margin-top:16px">
+            <h3>🚨 आपतकालीन सम्पर्क</h3>
+            <div class="contact-item">
+              <div class="contact-icon">🆘</div>
+              <div>
+                <div class="contact-item-label">खानेपानी आपत</div>
+                <div class="contact-item-value">+977-XXXXXXXXXX</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-contact -->
+
+<!-- ════════════════════════════════════════════════════════════
+     MODALS
+════════════════════════════════════════════════════════════ -->
+
+<!-- Payment Modal -->
+<div class="modal-overlay" id="payment-modal">
+  <div class="modal payment-modal">
+    <div class="modal-header">
+      <div class="modal-title">💳 भुक्तानी विधि छान्नुस्</div>
+      <button class="modal-close" data-modal-close="payment-modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-card mb-16" style="text-align:center">
+        <div style="font-size:0.85rem;color:var(--gray-500)">भुक्तानी गर्नुपर्ने रकम</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--blue-deep)" id="pay-bill-amount">रु. ०</div>
+        <div style="font-size:0.85rem;color:var(--gray-500)" id="pay-bill-name"></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;font-family:var(--font-nepali)">
+        भुक्तानी विधि छान्नुस्:
+      </p>
+      <div id="payment-processing" class="hidden" style="text-align:center;padding:20px">
+        <div class="spinner" style="width:40px;height:40px;border-width:3px;margin:0 auto 12px;border-color:rgba(37,99,235,0.2);border-top-color:var(--blue-light)"></div>
+        <p style="font-family:var(--font-nepali);color:var(--gray-600)">भुक्तानी प्रक्रियामा छ...</p>
+      </div>
+      <button class="method-btn" onclick="processPayment('esewa')">
+        <span class="m-icon">🟢</span>
+        <div>
+          <div style="font-weight:700">eSewa</div>
+          <div style="font-size:0.75rem;color:var(--gray-500)">नेपालको नं.१ डिजिटल वालेट</div>
+        </div>
+      </button>
+      <button class="method-btn" onclick="processPayment('fonepay')">
+        <span class="m-icon">🔵</span>
+        <div>
+          <div style="font-weight:700">Fonepay</div>
+          <div style="font-size:0.75rem;color:var(--gray-500)">QR र मोबाइल बैंकिङ</div>
+        </div>
+      </button>
+      <button class="method-btn" onclick="processPayment('connectips')">
+        <span class="m-icon">🟡</span>
+        <div>
+          <div style="font-weight:700">Connect IPS</div>
+          <div style="font-size:0.75rem;color:var(--gray-500)">अन्तर्बैंक भुक्तानी</div>
+        </div>
+      </button>
+      <div class="alert alert-info mt-12" style="font-size:0.78rem">
+        🔒 यो प्रदर्शन मोड हो। वास्तविक भुक्तानी एकीकरण छिट्टै आउँदैछ।
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Receipt Modal -->
+<div class="modal-overlay" id="receipt-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">🧾 भुक्तानी रसिद</div>
+      <button class="modal-close" data-modal-close="receipt-modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="receipt-content"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-blue" onclick="printReceipt()">🖨️ प्रिन्ट</button>
+      <button class="btn btn-primary" onclick="printReceipt()">⬇️ डाउनलोड</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin: Add Customer Modal -->
+<div class="modal-overlay" id="add-customer-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">➕ नयाँ ग्राहक थप्नुस्</div>
+      <button class="modal-close" data-modal-close="add-customer-modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="add-customer-form">
+        <div class="form-row">
+          <div class="input-group">
+            <label>पूरा नाम *</label>
+            <input type="text" id="ac-name" placeholder="ग्राहकको नाम" required>
+          </div>
+          <div class="input-group">
+            <label>धारा नं *</label>
+            <input type="text" id="ac-cid" placeholder="001" required>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>ठेगाना *</label>
+          <input type="text" id="ac-address" placeholder="रामनगर-९, सर्लाही" required>
+        </div>
+        <div class="input-group">
+          <label>फोन *</label>
+          <input type="tel" id="ac-phone" placeholder="98XXXXXXXX" required>
+        </div>
+        <div class="input-group">
+          <label>इमेल *</label>
+          <input type="email" id="ac-email" placeholder="customer@email.com" required>
+        </div>
+        <div class="input-group">
+          <label>पासवर्ड *</label>
+          <input type="password" id="ac-password" placeholder="कम्तिमा ६ अक्षर" required minlength="6">
+        </div>
+        <div class="modal-footer" style="padding:0;border:none;margin-top:8px">
+          <button type="button" class="btn btn-blue" data-modal-close="add-customer-modal">रद्द</button>
+          <button type="submit" class="btn btn-primary">➕ ग्राहक थप्नुस्</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Admin: Edit Customer Modal -->
+<div class="modal-overlay" id="edit-customer-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✏️ ग्राहक सम्पादन</div>
+      <button class="modal-close" data-modal-close="edit-customer-modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="edit-customer-form">
+        <input type="hidden" id="ec-uid">
+        <div class="input-group">
+          <label>पूरा नाम *</label>
+          <input type="text" id="ec-name" required>
+        </div>
+        <div class="input-group">
+          <label>धारा नं (परिवर्तन हुँदैन)</label>
+          <input type="text" id="ec-cid" disabled style="opacity:0.6">
+        </div>
+        <div class="input-group">
+          <label>ठेगाना *</label>
+          <input type="text" id="ec-address" required>
+        </div>
+        <div class="input-group">
+          <label>फोन *</label>
+          <input type="tel" id="ec-phone" required>
+        </div>
+        <div class="modal-footer" style="padding:0;border:none;margin-top:8px">
+          <button type="button" class="btn btn-blue" data-modal-close="edit-customer-modal">रद्द</button>
+          <button type="submit" class="btn btn-primary">💾 अपडेट गर्नुस्</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Admin: Create Bill Modal -->
+<div class="modal-overlay" id="create-bill-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📄 नयाँ बिल सिर्जना</div>
+      <button class="modal-close" data-modal-close="create-bill-modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="create-bill-form">
+        <div class="input-group">
+          <label>धारा नं (Customer ID) *</label>
+          <input type="text" id="cb-cid" placeholder="001" required>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label>बिल रकम (रु.) *</label>
+            <input type="number" id="cb-amount" placeholder="500" min="1" required>
+          </div>
+          <div class="input-group">
+            <label>महिना *</label>
+            <input type="text" id="cb-month" placeholder="2081-Baisakh" required>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>म्याद मिति *</label>
+          <input type="date" id="cb-due-date" required>
+        </div>
+        <div class="modal-footer" style="padding:0;border:none;margin-top:8px">
+          <button type="button" class="btn btn-blue" data-modal-close="create-bill-modal">रद्द</button>
+          <button type="submit" class="btn btn-primary">📄 बिल सिर्जना गर्नुस्</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Admin: Edit Bill Modal -->
+<div class="modal-overlay" id="edit-bill-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✏️ बिल सम्पादन</div>
+      <button class="modal-close" data-modal-close="edit-bill-modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="edit-bill-form">
+        <input type="hidden" id="eb-id">
+        <div class="input-group">
+          <label>बिल रकम (रु.) *</label>
+          <input type="number" id="eb-amount" min="1" required>
+        </div>
+        <div class="input-group">
+          <label>महिना *</label>
+          <input type="text" id="eb-month" required>
+        </div>
+        <div class="input-group">
+          <label>म्याद मिति *</label>
+          <input type="date" id="eb-due-date" required>
+        </div>
+        <div class="modal-footer" style="padding:0;border:none;margin-top:8px">
+          <button type="button" class="btn btn-blue" data-modal-close="edit-bill-modal">रद्द</button>
+          <button type="submit" class="btn btn-primary">💾 अपडेट गर्नुस्</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Admin: Add Member Modal -->
+<div class="modal-overlay" id="add-member-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">👤 नयाँ सदस्य थप्नुस्</div>
+      <button class="modal-close" data-modal-close="add-member-modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="add-member-form">
+        <div class="input-group">
+          <label>पूरा नाम *</label>
+          <input type="text" id="am-name" required>
+        </div>
+        <div class="input-group">
+          <label>पद *</label>
+          <input type="text" id="am-position" placeholder="अध्यक्ष, सचिव, कोषाध्यक्ष..." required>
+        </div>
+        <div class="input-group">
+          <label>ठेगाना *</label>
+          <input type="text" id="am-address" required>
+        </div>
+        <div class="input-group">
+          <label>फोन *</label>
+          <input type="tel" id="am-phone" required>
+        </div>
+        <div class="input-group">
+          <label>इमेल (वैकल्पिक)</label>
+          <input type="email" id="am-email">
+        </div>
+        <div class="modal-footer" style="padding:0;border:none;margin-top:8px">
+          <button type="button" class="btn btn-blue" data-modal-close="add-member-modal">रद्द</button>
+          <button type="submit" class="btn btn-primary">👤 सदस्य थप्नुस्</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-name">💧 रामनगर खानेपानी उपभोक्ता तथा सरसफाई समिति</div>
+      <p>ईश्वरपुर नगरपालिका-९, रामनगर, सर्लाही, नेपाल<br>
+      स्वच्छ पानी, स्वस्थ जीवन — Clean Water, Healthy Life</p>
+    </div>
+    <div>
+      <h4>छिटो लिङ्कहरू</h4>
+      <ul class="footer-links">
+        <li><a data-page="home">🏠 गृहपृष्ठ</a></li>
+        <li><a onclick="document.getElementById('bill-search-section')?.scrollIntoView({behavior:'smooth'});showPage('home')">📄 बिल जाँच्नुस्</a></li>
+        <li><a data-page="members" onclick="loadMembers()">👥 सदस्यहरू</a></li>
+        <li><a data-page="contact">📞 सम्पर्क</a></li>
+        <li><a data-page="auth">🔐 लगइन</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>सम्पर्क</h4>
+      <ul class="footer-links">
+        <li><a href="tel:+977XXXXXXXXXX">📞 +977-XXXXXXXXXX</a></li>
+        <li><a href="mailto:info@ramnagar-water.com">✉️ info@ramnagar-water.com</a></li>
+        <li><a href="https://wa.me/9779762579706" target="_blank">💬 WhatsApp</a></li>
+        <li><span>📍 रामनगर, सर्लाही</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;width:100%;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <p style="font-size:0.78rem">© 2081 रामनगर खानेपानी उपभोक्ता तथा सरसफाई समिति। सर्वाधिकार सुरक्षित।</p>
+      <div class="developer-credit">
+        💻 Developed by <strong>Mukesh Shah</strong> —
+        <a href="https://wa.me/9779762579706" target="_blank">WhatsApp: 9762579706</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     FIREBASE SDK (v9 compat)
+════════════════════════════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+<!-- App Scripts (order matters) -->
+<script src="js/firebase-config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/search.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/admin.js"></script>
+
+<script>
+// ── App Init ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  setupNav();
+  setupAuthTabs();
+  loadPublicStats();
+
+  // Mobile sidebar toggles
+  const mobSidebarBtn = document.getElementById('mob-sidebar-toggle');
+  const mobAdminBtn = document.getElementById('mob-admin-toggle');
+  if (window.innerWidth <= 1024) {
+    if (mobSidebarBtn) mobSidebarBtn.style.display = '';
+    if (mobAdminBtn) mobAdminBtn.style.display = '';
+  }
+
+  // Responsive: show mobile sidebar toggle
+  window.addEventListener('resize', () => {
+    const isMobile = window.innerWidth <= 1024;
+    if (mobSidebarBtn) mobSidebarBtn.style.display = isMobile ? '' : 'none';
+    if (mobAdminBtn) mobAdminBtn.style.display = isMobile ? '' : 'none';
+  });
+
+  // Close mobile nav on outside click
+  document.addEventListener('click', (e) => {
+    const nav = document.getElementById('mobile-nav');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav?.classList.contains('open') && !nav.contains(e.target) && !hamburger?.contains(e.target)) {
+      closeMobileNav();
+    }
+  });
+});
+</script>
+</body>
+</html>
